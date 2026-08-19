@@ -10,13 +10,273 @@
 
   <title>平均いくら？</title>
 
+  <style>
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+    body {
+
+      margin: 0;
+
+      padding: 30px 20px;
+
+      font-family: Arial, sans-serif;
+
+      background: #f5f5f3;
+
+      color: #222;
+
+      text-align: center;
+
+    }
+
+    h1 {
+
+      margin-top: 20px;
+
+      font-size: 32px;
+
+    }
+
+    .subtitle {
+
+      margin-bottom: 30px;
+
+      color: #666;
+
+    }
+
+    .box {
+
+      max-width: 400px;
+
+      margin: 0 auto;
+
+      background: white;
+
+      padding: 25px;
+
+      border-radius: 18px;
+
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+
+    }
+
+    select,
+
+    input {
+
+      width: 100%;
+
+      padding: 14px;
+
+      margin-top: 8px;
+
+      margin-bottom: 20px;
+
+      border: 1px solid #ddd;
+
+      border-radius: 10px;
+
+      font-size: 18px;
+
+    }
+
+    label {
+
+      display: block;
+
+      text-align: left;
+
+      font-weight: bold;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      padding: 15px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: #222;
+
+      color: white;
+
+      font-size: 18px;
+
+      cursor: pointer;
+
+    }
+
+    button:active {
+
+      transform: scale(0.98);
+
+    }
+
+    #result {
+
+      margin-top: 25px;
+
+      padding: 20px;
+
+      border-radius: 12px;
+
+      background: #f1f1ef;
+
+      display: none;
+
+    }
+
+    .average {
+
+      font-size: 26px;
+
+      font-weight: bold;
+
+      margin: 10px 0;
+
+    }
+
+    .message {
+
+      font-size: 18px;
+
+      font-weight: bold;
+
+    }
+
+  </style>
+
 </head>
 
 <body>
 
   <h1>平均いくら？</h1>
 
-  <p>これ、高いんかな？</p>
+  <p class="subtitle">
+
+    「これ、高いんかな？」を5秒で判定。
+
+  </p>
+
+  <div class="box">
+
+    <label for="product">商品を選ぶ</label>
+
+    <select id="product">
+
+      <option value="egg">🥚 卵（10個）</option>
+
+      <option value="milk">🥛 牛乳（1L）</option>
+
+      <option value="bread">🍞 食パン（1袋）</option>
+
+    </select>
+
+    <label for="price">あなたが見た価格</label>
+
+    <input
+
+      type="number"
+
+      id="price"
+
+      placeholder="例：298"
+
+      min="0"
+
+    >
+
+    <button onclick="checkPrice()">
+
+      判定する
+
+    </button>
+
+    <div id="result">
+
+      <div>全国平均</div>
+
+      <div class="average" id="averagePrice">
+
+        ¥0
+
+      </div>
+
+      <div class="message" id="message">
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const averages = {
+
+      egg: 275,
+
+      milk: 230,
+
+      bread: 180
+
+    };
+
+    function checkPrice() {
+
+      const product = document.getElementById("product").value;
+
+      const price = Number(document.getElementById("price").value);
+
+      if (!price || price <= 0) {
+
+        alert("価格を入力してな！");
+
+        return;
+
+      }
+
+      const average = averages[product];
+
+      document.getElementById("averagePrice").textContent =
+
+        "¥" + average;
+
+      if (price > average * 1.05) {
+
+        document.getElementById("message").textContent =
+
+          "🔴 平均より高め";
+
+      } else if (price < average * 0.95) {
+
+        document.getElementById("message").textContent =
+
+          "🟢 平均より安め";
+
+      } else {
+
+        document.getElementById("message").textContent =
+
+          "⚪ だいたい平均";
+
+      }
+
+      document.getElementById("result").style.display = "block";
+
+    }
+
+  </script>
 
 </body>
 
